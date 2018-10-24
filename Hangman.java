@@ -27,8 +27,6 @@ Scanner sc = new Scanner(System.in);
 		System.out.println("A cada acerto a letra aparecera no console e voce podera tentar a proxima letra.");
 		System.out.println("A cada erro uma parte da forca e criada.");
 		System.out.println("No primeiro nivel voce podera errar ate 5 letras, no sexto erro o personagem e enforcado e o jogo acaba.");
-		System.out.println("No segundo nivel voce podera errar ate 4 letras, no quinto erro o personagem e enforcado e o jogo tambem acaba.");
-		System.out.println("Aperte ENTER quando estiver pronto e que o jogo comece!!!");
 		sc.nextLine();
 		
 		/*
@@ -48,36 +46,41 @@ Scanner sc = new Scanner(System.in);
 		
 				
 		//Criando as variáveis que vão servir de referência para o limite de tentativas de cada nível
-		int maxGuessesLevel1 = 6;
-		int maxGuessesLevel2 = 5;
+		int maxGuesses = 0;
+		int level = 1;
+		String[] words = {};
+			
+		//Escolha aleatória das palavras
+		Random choosedWord = new Random();
 		
-		game(maxGuessesLevel1, wordsLevel1);
+		char guess = ' ';
 		
-		if (game) game(maxGuessesLevel2, wordsLevel2);
+		//variáveis que irão controlar o andamento do jogo
+		int tries = 0;
+		int played = 1;
+		boolean finished = false;
+		boolean wordWasDiscovered = false;
 		
-		public static void game(int maxGuesses, String[] words) {
-			
-			//Escolha aleatória das palavras
-			Random choosedWord = new Random();
-			
-			char guess = ' ';
-			
-			//variáveis que irão controlar o andamento do jogo
-			int tries = 0;
-			int played = 1;
-			boolean finished = false;
-			boolean wordWasDiscovered = false;
-			
-			//Vou criar uma lista de caracteres digitados porque percebi que se eu digitar uma letra que já digitei e está certa
-			//o programa decrementa a variável "tries".
-			ArrayList<Character> tipedLetters = new ArrayList<Character>();
+		//Vou criar uma lista de caracteres digitados porque percebi que se eu digitar uma letra que já digitei e está certa
+		//o programa decrementa a variável "tries".
+		ArrayList<Character> tipedLetters = new ArrayList<Character>();
 			
 			//Enquanto o status do jogo não for "Finished"
 			while(!finished) {
-				System.out.println("Jogando");
+				
+				//Verificar o nível do jogo e adequar as palavras e as chances do jogador
+				if(level == 1) {
+					maxGuesses = 6;
+					words = wordsLevel1;
+				} else if(level == 2) {
+					maxGuesses = 5;
+					words = wordsLevel2;
+				} else {
+					finished = true;
+				}
 				
 				//pegar a palavra escolhida aleatoriamente e transformar em um array de caracteres
-				char[] wordToGuess = wordsLevel1[choosedWord.nextInt(words.length)].toCharArray();
+				char[] wordToGuess = words[choosedWord.nextInt(words.length)].toCharArray();
 				
 				//Verifica o numero de caracteres da palavra e imprime "_" na tela
 				int amountOfChars = wordToGuess.length;
@@ -88,9 +91,8 @@ Scanner sc = new Scanner(System.in);
 				
 				//Enquanto a palavra não for descoberta e a quantidade de tentativas não ultrapassar o limite
 				while(!wordWasDiscovered && tries != maxGuesses){
-	
 					clearScreen();
-					hangmanImage(tries);
+					hangmanImage(tries, level);
 					System.out.println("Tentativa: " + played);
 					System.out.printf("Voce pode errar %d vezes.\n", maxGuesses - tries);
 					printArray(showedSpaces);
@@ -118,7 +120,7 @@ Scanner sc = new Scanner(System.in);
 								showedSpaces[i] = guess;
 								//Essa linha a seguir coloquei porque percebi que quando eu acertava a primeira letra
 								//o jogo incrementava a quantidade de possibilidades de erros
-								if(tries <= maxGuessesLevel1) tries--;
+								if(tries <= maxGuesses) tries--;
 							}
 		
 						}
@@ -128,14 +130,18 @@ Scanner sc = new Scanner(System.in);
 							System.out.println("Parabens, voce acertou a palavra!!! ");
 							printArray(wordToGuess);
 							System.out.println();
-							return true;
+							level++;
+							System.out.println("No segundo nivel voce podera errar ate 4 letras, no quinto erro o personagem e enforcado e o jogo tambem acaba.");
+							System.out.println("Aperte ENTER quando estiver pronto e que o jogo comece!!!");
+							sc.nextLine();
+							finished = false;
 						}
 					}
 				}
 				//Se a palavra não for descoberta
 				if(!wordWasDiscovered){
 					clearScreen();
-					hangmanImage(tries);
+					hangmanImage(tries, level);
 					System.out.println("Acabaram as suas chances!!!");
 					System.out.println("A palavra era:");
 					printArray(wordToGuess);
@@ -149,7 +155,6 @@ Scanner sc = new Scanner(System.in);
 	
 		}
 	
-	}
 
 	//Este método lê o array de caracteres e imprime
 	public static void printArray(char[] array){
@@ -174,9 +179,9 @@ Scanner sc = new Scanner(System.in);
 	}
 
 	//Método para desenhar a forca no console usando a variável tries pq ela incrementa com a quantidade de erros
-	public static void hangmanImage(int tries) {
+	public static void hangmanImage(int tries, int level) {
 		if (tries == 0) {
-			System.out.println("Errou, Tente novamente");
+			System.out.println("Nivel "+ level);
 			System.out.println();
 			System.out.println();
 			System.out.println();
@@ -185,7 +190,7 @@ Scanner sc = new Scanner(System.in);
 			System.out.println();
 		}
 		if (tries == 1) {
-			System.out.println("Errou, Tente novamente");
+			System.out.println("Nivel "+ level +"Errou, Tente novamente");
 			System.out.println("   |");
 			System.out.println("   |");
 			System.out.println("   |");
@@ -196,7 +201,7 @@ Scanner sc = new Scanner(System.in);
 			System.out.println("___|___");
 		}
 		if (tries == 2) {
-			System.out.println("Errou, Tente novamente");
+			System.out.println("Nivel "+ level +"Errou, Tente novamente");
 			System.out.println("   ____________");
 			System.out.println("   |");
 			System.out.println("   |");
@@ -208,7 +213,7 @@ Scanner sc = new Scanner(System.in);
 			System.out.println("___|___");
 		}
 		if (tries == 3) {
-			System.out.println("Errou, Tente novamente");
+			System.out.println("Nivel "+ level +"Errou, Tente novamente");
 			System.out.println("   ____________");
 			System.out.println("   |          _|_");
 			System.out.println("   |         /   \\");
@@ -220,7 +225,7 @@ Scanner sc = new Scanner(System.in);
 			System.out.println("___|___");
 		}
 		if (tries == 4) {
-			System.out.println("Errou, Tente novamente");
+			System.out.println("Nivel "+ level +"Errou, Tente novamente");
 			System.out.println("   ____________");
 			System.out.println("   |          _|_");
 			System.out.println("   |         /   \\");
@@ -232,7 +237,7 @@ Scanner sc = new Scanner(System.in);
 			System.out.println("___|___");
 		}
 		if (tries == 5) {
-			System.out.println("Errou, Tente novamente");
+			System.out.println("Nivel "+ level +"Errou, Tente novamente");
 			System.out.println("   ____________");
 			System.out.println("   |          _|_");
 			System.out.println("   |         /   \\");
@@ -244,7 +249,7 @@ Scanner sc = new Scanner(System.in);
 			System.out.println("___|___      /   \\");
 		}
 		if (tries == 6) {
-			System.out.println("ACABOU");
+			System.out.println("ACABOU, VOCE PERDEU!!!!!");
 			System.out.println("   ____________");
 			System.out.println("   |          _|_");
 			System.out.println("   |         /   \\");
