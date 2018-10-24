@@ -44,103 +44,112 @@ Scanner sc = new Scanner(System.in);
 							    "new", "package", "private", "protected", "public", "return", "short", "static", "strictfp", "super",
 							    "switch", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile", "while"};
 
-		//String[] wordsLevel2 = {"boolean", "byte", "char", "double", "float", "instanceof", "int", "long", "short", "void"};
+		String[] wordsLevel2 = {"boolean", "byte", "char", "double", "float", "instanceof", "int", "long", "short", "void"};
 		
-		//Escolha aleatória das palavras
-		Random choosedWord = new Random();
 				
 		//Criando as variáveis que vão servir de referência para o limite de tentativas de cada nível
 		int maxGuessesLevel1 = 6;
-		//int maxGuessesLevel2 = 5;
-		char guess = ' ';
+		int maxGuessesLevel2 = 5;
 		
-		//variáveis que irão controlar o andamento do jogo
-		int tries = 0;
-		int played = 1;
-		boolean finished = false;
-		boolean wordWasDiscovered = false;
-
-		//Vou criar uma lista de caracteres digitados porque percebi que se eu digitar uma letra que já digitei e está certa
-		//o programa decrementa a variável "tries".
-		ArrayList<Character> tipedLetters = new ArrayList<Character>();
+		game(maxGuessesLevel1, wordsLevel1);
+		
+		if (game) game(maxGuessesLevel2, wordsLevel2);
+		
+		public static void game(int maxGuesses, String[] words) {
+			
+			//Escolha aleatória das palavras
+			Random choosedWord = new Random();
+			
+			char guess = ' ';
+			
+			//variáveis que irão controlar o andamento do jogo
+			int tries = 0;
+			int played = 1;
+			boolean finished = false;
+			boolean wordWasDiscovered = false;
+			
+			//Vou criar uma lista de caracteres digitados porque percebi que se eu digitar uma letra que já digitei e está certa
+			//o programa decrementa a variável "tries".
+			ArrayList<Character> tipedLetters = new ArrayList<Character>();
+			
+			//Enquanto o status do jogo não for "Finished"
+			while(!finished) {
+				System.out.println("Jogando");
 				
-		//Enquanto o status do jogo não for "Finished"
-		while(!finished) {
-			System.out.println("Jogando");
-			
-			//pegar a palavra escolhida aleatoriamente e transformar em um array de caracteres
-			char[] wordToGuess = wordsLevel1[choosedWord.nextInt(wordsLevel1.length)].toCharArray();
-			
-			//Verifica o numero de caracteres da palavra e imprime "_" na tela
-			int amountOfChars = wordToGuess.length;
-			char[] showedSpaces = new char[amountOfChars];
-			for (int i = 0; i < showedSpaces.length; i++){
-				showedSpaces[i] = '_';
-			}
-			
-			//Enquanto a palavra não for descoberta e a quantidade de tentativas não ultrapassar o limite
-			while(!wordWasDiscovered && tries != maxGuessesLevel1){
-
-				clearScreen();
-				hangmanImage(tries);
-				System.out.println("Tentativa: " + played);
-				System.out.printf("Voce pode errar %d vezes.\n", maxGuessesLevel1 - tries);
-				printArray(showedSpaces);
-				System.out.println("digite uma letra");
-				guess = sc.nextLine().charAt(0);
-
-				//Desconsiderar letras já digitadas anteriormente
-				if(tipedLetters.contains(guess)){
-					System.out.println("Letra já digitada anteriormente, tente outra");
-					continue;
+				//pegar a palavra escolhida aleatoriamente e transformar em um array de caracteres
+				char[] wordToGuess = wordsLevel1[choosedWord.nextInt(words.length)].toCharArray();
+				
+				//Verifica o numero de caracteres da palavra e imprime "_" na tela
+				int amountOfChars = wordToGuess.length;
+				char[] showedSpaces = new char[amountOfChars];
+				for (int i = 0; i < showedSpaces.length; i++){
+					showedSpaces[i] = '_';
 				}
-
-				tries++;
-				played++;
 				
-				//Se o jogador quiser sair do jogo basta digitar o caractere underscore
-				if (guess == '_'){
-					finished = true;
-					break;
-				//Enquanto houver caractere para descobrir...	
-				} else {
-					for(int i = 0; i < wordToGuess.length; i++){
+				//Enquanto a palavra não for descoberta e a quantidade de tentativas não ultrapassar o limite
+				while(!wordWasDiscovered && tries != maxGuesses){
 	
-						if(wordToGuess[i] == guess){
-							showedSpaces[i] = guess;
-							//Essa linha a seguir coloquei porque percebi que quando eu acertava a primeira letra
-							//o jogo incrementava a quantidade de possibilidades de erros
-							if(tries <= maxGuessesLevel1) tries--;
-						}
+					clearScreen();
+					hangmanImage(tries);
+					System.out.println("Tentativa: " + played);
+					System.out.printf("Voce pode errar %d vezes.\n", maxGuesses - tries);
+					printArray(showedSpaces);
+					System.out.println("digite uma letra");
+					guess = sc.nextLine().charAt(0);
 	
+					//Desconsiderar letras já digitadas anteriormente
+					if(tipedLetters.contains(guess)){
+						System.out.println("Letra já digitada anteriormente, tente outra");
+						continue;
 					}
-					//Se o jogador acertar a palavra
-					if (isTheWordGuessed(showedSpaces)){
-						wordWasDiscovered = true;
-						System.out.println("Parabens, voce acertou a palavra!!! ");
-						printArray(wordToGuess);
-						System.out.println();
+	
+					tries++;
+					played++;
+					
+					//Se o jogador quiser sair do jogo basta digitar o caractere underscore
+					if (guess == '_'){
 						finished = true;
+						break;
+					//Enquanto houver caractere para descobrir...	
+					} else {
+						for(int i = 0; i < wordToGuess.length; i++){
+		
+							if(wordToGuess[i] == guess){
+								showedSpaces[i] = guess;
+								//Essa linha a seguir coloquei porque percebi que quando eu acertava a primeira letra
+								//o jogo incrementava a quantidade de possibilidades de erros
+								if(tries <= maxGuessesLevel1) tries--;
+							}
+		
+						}
+						//Se o jogador acertar a palavra
+						if (isTheWordGuessed(showedSpaces)){
+							wordWasDiscovered = true;
+							System.out.println("Parabens, voce acertou a palavra!!! ");
+							printArray(wordToGuess);
+							System.out.println();
+							return true;
+						}
 					}
 				}
+				//Se a palavra não for descoberta
+				if(!wordWasDiscovered){
+					clearScreen();
+					hangmanImage(tries);
+					System.out.println("Acabaram as suas chances!!!");
+					System.out.println("A palavra era:");
+					printArray(wordToGuess);
+					System.out.println();
+					finished = true;
+				} 
 			}
-			//Se a palavra não for descoberta
-			if(!wordWasDiscovered){
-				clearScreen();
-				hangmanImage(tries);
-				System.out.println("Acabaram as suas chances!!!");
-				System.out.println("A palavra era:");
-				printArray(wordToGuess);
-				System.out.println();
-				finished = true;
-			} 
-		}
-
-		System.out.println("Fim de Jogo!!!");
-		finished = true;
-
-	}
 	
+			System.out.println("Fim de Jogo!!!");
+			finished = true;
+	
+		}
+	
+	}
 
 	//Este método lê o array de caracteres e imprime
 	public static void printArray(char[] array){
