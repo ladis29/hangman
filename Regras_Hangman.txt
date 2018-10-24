@@ -1,0 +1,63 @@
+# Jogo da Forca (Hangman)
+
+## Objetivo
+
+- Desenvolver um jogo usando arrays e as instruções de controle de fluxo da linguagem Java. O jogador deve acertar a palavra senha no menor número de tentativas possível.
+
+## Como Jogar
+
+- O jogo apresenta o objetivo ao jogador;
+- O jogador se identifica;
+- O jogo apresenta a categoria, a quantidade máxima de tentativas erradas e quantas letras possuem a palavra selecionada;
+- O jogador tenta uma letra;
+- O jogo apresenta as letras acertadas pelo jogador na respectiva posição da palavra, a quantidade de erros e a quantidade máxima de tentativas erradas.
+
+```
+Exemplo: * [*a*a] 01/06 ;
+```
+
+- O jogador continua tentando letras até acabar as tentativas ou acertar a palavra senha;
+- Quando uma das situações acontecer, o jogo deve apresentar o nome do jogador e se venceu. Para vencer o jogador precisa descobrir a palavra senha sem atingir a quantidade máxima de tentativas erradas;
+
+## Níveis
+
+
+### Nível 1
+
+- as 50 palavras reservadas do java, máximo de 6 tentativas erradas;
+
+### Nível 2
+
+- as 10 palavras reservadas do java relacionadas a tipos (tipos primitivos, único operador que é palavra reservada, palavra reservada usada quando um método não retorna valor), máximo de 5 tentativas erradas;
+
+## Importante
+
+- Se for necessário usar outra classe do SE além das citadas nas dicas, essa autorização precisa ser aceita pelo instrutor e os demais alunos;
+- Novas classes podem ser criadas, desde que todos os métodos tenham na sua declaração a palavra reservada static;
+
+## Dicas
+
+- para ler cada tentativa do jogador, usar a classe java.util.Scanner.
+Exemplo:
+ java.util.Scanner sc = new  java.util.Scanner(System.in);
+ String text = sc.next();
+ - para comparar letras (char), basta utilizar o operador de igualdade.
+Exemplo:
+if (resposta == letraLida){
+	...
+}
+- para escrever no console, usar os métodos print, println ou printf da classe System.
+Exemplo:
+System.out.println(" Nome: " + jogador );
+- pode ser necessário utilizar métodos da classe String. Para isso consulte a documentação técnica dessa classe na internet (javadoc java.lang.String)
+
+## Entrega
+
+- Enviem a solução, completa ou parcial, com o nome ajtf103-aj1-hangman-NOME.zip para sala privada do instrutor no slack até 26 de outubro (sexta).
+
+
+## Referências
+
+- https://en.wikipedia.org/wiki/Hangman_(game)
+- http://www.playhangman.com/
+- http://www.hangman.no/
