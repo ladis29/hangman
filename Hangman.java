@@ -67,6 +67,9 @@ Scanner sc = new Scanner(System.in);
 			
 			//Enquanto o status do jogo não for "Finished"
 			while(!finished) {
+				wordWasDiscovered = false;
+				tries = 0;
+				played = 1;
 				
 				//Verificar o nível do jogo e adequar as palavras e as chances do jogador
 				if(level == 1) {
@@ -130,11 +133,14 @@ Scanner sc = new Scanner(System.in);
 							System.out.println("Parabens, voce acertou a palavra!!! ");
 							printArray(wordToGuess);
 							System.out.println();
-							level++;
-							System.out.println("No segundo nivel voce podera errar ate 4 letras, no quinto erro o personagem e enforcado e o jogo tambem acaba.");
-							System.out.println("Aperte ENTER quando estiver pronto e que o jogo comece!!!");
-							sc.nextLine();
-							finished = false;
+							if(level == 1) {
+								System.out.println("No segundo nivel voce podera errar ate 4 letras, no quinto erro o personagem e enforcado e o jogo tambem acaba.");
+								System.out.println("Aperte ENTER quando estiver pronto e que o jogo comece!!!");
+								sc.nextLine();
+								level++;
+							} else {
+								finished = true;
+							}
 						}
 					}
 				}
@@ -178,87 +184,179 @@ Scanner sc = new Scanner(System.in);
     	System.out.println ();
 	}
 
-	//Método para desenhar a forca no console usando a variável tries pq ela incrementa com a quantidade de erros
+	//Método para desenhar a forca no console usando "switch", a variável tries pq ela incrementa com a quantidade de erros e o level pra diferenciar
 	public static void hangmanImage(int tries, int level) {
-		if (tries == 0) {
-			System.out.println("Nivel "+ level);
-			System.out.println();
-			System.out.println();
-			System.out.println();
-			System.out.println();
-			System.out.println("___|___");
-			System.out.println();
+			if(level == 1){
+			switch (tries) {
+				case 0:
+				System.out.println("Nivel "+ level);
+				System.out.println();
+				System.out.println();
+				System.out.println();
+				System.out.println();
+				System.out.println("___|___");
+				System.out.println();
+				break;
+
+				case 1:
+				System.out.println("Nivel "+ level +" Errou, Tente novamente");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("___|___");
+				break;
+
+				case 2:
+				System.out.println("Nivel "+ level +" Errou, Tente novamente");
+				System.out.println("   ____________");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   | ");
+				System.out.println("___|___");
+				break;
+
+				case 3:
+				System.out.println("Nivel "+ level +" Errou, Tente novamente");
+				System.out.println("   ____________");
+				System.out.println("   |          _|_");
+				System.out.println("   |         /   \\");
+				System.out.println("   |        |     |");
+				System.out.println("   |         \\_ _/");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("___|___");
+				break;
+
+				case 4:
+				System.out.println("Nivel "+ level +" Errou, Tente novamente");
+				System.out.println("   ____________");
+				System.out.println("   |          _|_");
+				System.out.println("   |         /   \\");
+				System.out.println("   |        |     |");
+				System.out.println("   |         \\_ _/");
+				System.out.println("   |           |");
+				System.out.println("   |           |");
+				System.out.println("   |");
+				System.out.println("___|___");
+				break;
+
+				case 5:
+				System.out.println("Nivel "+ level +" Errou, Tente novamente");
+				System.out.println("   ____________");
+				System.out.println("   |          _|_");
+				System.out.println("   |         /   \\");
+				System.out.println("   |        |     |");
+				System.out.println("   |         \\_ _/");
+				System.out.println("   |           |");
+				System.out.println("   |           |");
+				System.out.println("   |          / \\ ");
+				System.out.println("___|___      /   \\");
+				break;
+
+				case 6:
+				System.out.println("ACABOU, VOCE PERDEU!!!!!");
+				System.out.println("   ____________");
+				System.out.println("   |          _|_");
+				System.out.println("   |         /   \\");
+				System.out.println("   |        |     |");
+				System.out.println("   |         \\_ _/");
+				System.out.println("   |          _|_");
+				System.out.println("   |         / | \\");
+				System.out.println("   |          / \\ ");
+				System.out.println("___|___      /   \\");
+				break;
+			}
 		}
-		if (tries == 1) {
-			System.out.println("Nivel "+ level +"Errou, Tente novamente");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("___|___");
-		}
-		if (tries == 2) {
-			System.out.println("Nivel "+ level +"Errou, Tente novamente");
-			System.out.println("   ____________");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   | ");
-			System.out.println("___|___");
-		}
-		if (tries == 3) {
-			System.out.println("Nivel "+ level +"Errou, Tente novamente");
-			System.out.println("   ____________");
-			System.out.println("   |          _|_");
-			System.out.println("   |         /   \\");
-			System.out.println("   |        |     |");
-			System.out.println("   |         \\_ _/");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("   |");
-			System.out.println("___|___");
-		}
-		if (tries == 4) {
-			System.out.println("Nivel "+ level +"Errou, Tente novamente");
-			System.out.println("   ____________");
-			System.out.println("   |          _|_");
-			System.out.println("   |         /   \\");
-			System.out.println("   |        |     |");
-			System.out.println("   |         \\_ _/");
-			System.out.println("   |           |");
-			System.out.println("   |           |");
-			System.out.println("   |");
-			System.out.println("___|___");
-		}
-		if (tries == 5) {
-			System.out.println("Nivel "+ level +"Errou, Tente novamente");
-			System.out.println("   ____________");
-			System.out.println("   |          _|_");
-			System.out.println("   |         /   \\");
-			System.out.println("   |        |     |");
-			System.out.println("   |         \\_ _/");
-			System.out.println("   |           |");
-			System.out.println("   |           |");
-			System.out.println("   |          / \\ ");
-			System.out.println("___|___      /   \\");
-		}
-		if (tries == 6) {
-			System.out.println("ACABOU, VOCE PERDEU!!!!!");
-			System.out.println("   ____________");
-			System.out.println("   |          _|_");
-			System.out.println("   |         /   \\");
-			System.out.println("   |        |     |");
-			System.out.println("   |         \\_ _/");
-			System.out.println("   |          _|_");
-			System.out.println("   |         / | \\");
-			System.out.println("   |          / \\ ");
-			System.out.println("___|___      /   \\");
+
+		if(level == 2){
+			switch (tries) {
+
+				case 0:
+				System.out.println("Nivel "+ level +" Vamos recomeçar");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("___|___");
+				break;
+
+				case 1:
+				System.out.println("Nivel "+ level +" Errou, Tente novamente");
+				System.out.println("   ____________");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   | ");
+				System.out.println("___|___");
+				break;
+
+				case 2:
+				System.out.println("Nivel "+ level +" Errou, Tente novamente");
+				System.out.println("   ____________");
+				System.out.println("   |          _|_");
+				System.out.println("   |         /   \\");
+				System.out.println("   |        |     |");
+				System.out.println("   |         \\_ _/");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("   |");
+				System.out.println("___|___");
+				break;
+
+				case 3:
+				System.out.println("Nivel "+ level +" Errou, Tente novamente");
+				System.out.println("   ____________");
+				System.out.println("   |          _|_");
+				System.out.println("   |         /   \\");
+				System.out.println("   |        |     |");
+				System.out.println("   |         \\_ _/");
+				System.out.println("   |           |");
+				System.out.println("   |           |");
+				System.out.println("   |");
+				System.out.println("___|___");
+				break;
+
+				case 4:
+				System.out.println("Nivel "+ level +" Errou, Tente novamente");
+				System.out.println("   ____________");
+				System.out.println("   |          _|_");
+				System.out.println("   |         /   \\");
+				System.out.println("   |        |     |");
+				System.out.println("   |         \\_ _/");
+				System.out.println("   |           |");
+				System.out.println("   |           |");
+				System.out.println("   |          / \\ ");
+				System.out.println("___|___      /   \\");
+				break;
+
+				case 5:
+				System.out.println("ACABOU, VOCE PERDEU!!!!!");
+				System.out.println("   ____________");
+				System.out.println("   |          _|_");
+				System.out.println("   |         /   \\");
+				System.out.println("   |        |     |");
+				System.out.println("   |         \\_ _/");
+				System.out.println("   |          _|_");
+				System.out.println("   |         / | \\");
+				System.out.println("   |          / \\ ");
+				System.out.println("___|___      /   \\");
+				break;
+			}
 		}
 	}
 
