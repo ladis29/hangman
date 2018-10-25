@@ -27,6 +27,7 @@ Scanner sc = new Scanner(System.in);
 		System.out.println("A cada acerto a letra aparecera no console e voce podera tentar a proxima letra.");
 		System.out.println("A cada erro uma parte da forca e criada.");
 		System.out.println("No primeiro nivel voce podera errar ate 5 letras, no sexto erro o personagem e enforcado e o jogo acaba.");
+		System.out.println("Aperte ENTER quando estiver pronto e que o jogo comece!!!");
 		sc.nextLine();
 		
 		/*
@@ -135,7 +136,7 @@ Scanner sc = new Scanner(System.in);
 							System.out.println();
 							if(level == 1) {
 								System.out.println("No segundo nivel voce podera errar ate 4 letras, no quinto erro o personagem e enforcado e o jogo tambem acaba.");
-								System.out.println("Aperte ENTER quando estiver pronto e que o jogo comece!!!");
+								System.out.println("Aperte ENTER quando estiver pronto e vamos continuar!!!");
 								sc.nextLine();
 								level++;
 							} else {
